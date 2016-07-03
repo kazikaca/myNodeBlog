@@ -27,10 +27,11 @@ router.get('/', function (req, res, next) {
             }
 
             res.render('blog/index', {
+                title:'我的博客',
                 posts: posts.slice((pageNum - 1) * pageSize, pageNum * pageSize),
                 pageNum: pageNum,
                 pageCount: pageCount,
-                pretty: true,
+                pretty: true
             });
         });
 });
@@ -51,9 +52,10 @@ router.get('/category/:name', function (req, res, next) {
                 }
 
                 res.render('blog/category', {
+                    title: category.name + '分类下的文章',
                     posts: posts,
                     category: category,
-                    pretty: true,
+                    pretty: true
                 });
 
             });
@@ -81,7 +83,8 @@ router.get('/view/:id', function (req, res, next) {
             }
 
             res.render('blog/view', {
-                post: post,
+                title: post.title,
+                post: post
             });
         });
 });
@@ -137,14 +140,14 @@ router.post('/comment/:id', function (req, res, next) {
         var comment = {
             email: req.body.email,
             content: req.body.content,
-            created: new Date(),
+            created: new Date()
         };
 
         post.comments.unshift(comment);
         post.markModified('comments');
 
         post.save(function (err, post) {
-            req.flash('info', '评论添加成功')
+            req.flash('info', '评论添加成功');
             res.redirect('/posts/view/' + post.slug);
         });
     });

@@ -1,10 +1,12 @@
 var path = require('path'),
-        rootPath = path.normalize(__dirname + '/..'),
-        env = process.env.NODE_ENV || 'development';
+    rootPath = path.normalize(__dirname + '/..'),
+    servPath = path.normalize(__dirname + '/app/service'),
+    env = process.env.NODE_ENV || 'development';
 
 var config = {
     development: {
         root: rootPath,
+        serv: servPath,
         app: {
             name: 'hello-nodeblog'
         },
@@ -14,6 +16,7 @@ var config = {
 
     test: {
         root: rootPath,
+        serv: servPath,
         app: {
             name: 'hello-nodeblog'
         },
@@ -23,6 +26,7 @@ var config = {
 
     production: {
         root: rootPath,
+        serv: servPath,
         app: {
             name: 'hello-nodeblog'
         },

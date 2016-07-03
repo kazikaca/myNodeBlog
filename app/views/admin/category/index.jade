@@ -3,5 +3,9 @@ extends ../layout
 block content
     h2.page-header 分类列表
 
+    ul
+    each item in categories
+        li= item.name
+
 block scripts
     script $(document).ready(function () { console.log('dom ready'); });

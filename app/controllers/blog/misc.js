@@ -10,15 +10,15 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/about', function (req, res, next) {
-    res.render('blog/index', {
-        title: 'About me',
-        pretty: true,
+    res.render('blog/about', {
+        title: '关于我',
+        pretty: true
     });
 });
 
 router.get('/contact', function (req, res, next) {
-    res.render('blog/index', {
-        title: 'Contact me',
-        pretty: true,
+    res.render('blog/contact', {
+        title: '联系我',
+        pretty: true
     });
 });

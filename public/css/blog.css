@@ -143,8 +143,7 @@ h6, .h6 {
 }
 
 .post-title {
-    border: 1px solid #EEEEEE;
-    border-width: 1px 0;
+    border-bottom: 1px solid #EEEEEE;
     padding: 5px 0;
 }
 

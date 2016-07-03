@@ -63,7 +63,7 @@ router.get('/', function (req, res, next) {
                     pretty: true,
                     filter: {
                         category: req.query.category || "",
-                        author: req.query.author || "",
+                        author: req.query.author || ""
                     }
                 });
             });
@@ -72,7 +72,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/add', function (req, res, next) {
     res.render('admin/post/add', {
-        pretty: true,
+        pretty: true
     });
 });
 
@@ -95,7 +95,7 @@ router.post('/add', function (req, res, next) {
             published: true,
             meta: { favorite: 0 },
             comments: [],
-            created: new Date(),
+            created: new Date()
         });
 
         post.save(function (err, post) {
