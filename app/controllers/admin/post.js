@@ -3,7 +3,8 @@ var express = require('express'),
     mongoose = require('mongoose'),
     Post = mongoose.model('Post'),
     User = mongoose.model('User'),
-    Category = mongoose.model('Category');
+    Category = mongoose.model('Category'),
+    PostServ = require('../../service/postService');
 
 module.exports = function (app) {
     app.use('/admin/posts', router);
@@ -34,45 +35,45 @@ router.get('/', function (req, res, next) {
     }
 
     User.find({}, function (err, authors) {
+
         if (err) return next(err);
 
-        Post.find(conditions)
-            .sort(sortObj)
-            .populate('author')
-            .populate('category')
-            .exec(function (err, posts) {
-                if (err) return next(err);
+        PostServ.getPostsWithQuery(conditions, sortObj, ['author', 'category'], function (err, posts) {
+            if (err) return next(err);
 
-                var pageNum = Math.abs(parseInt(req.query.page || 1, 10));
-                var pageSize = 10;
+            var pageNum = Math.abs(parseInt(req.query.page || 1, 10));
+            var pageSize = 10;
 
-                var totalCount = posts.length;
-                var pageCount = Math.ceil(totalCount / pageSize);
+            var totalCount = posts.length;
+            var pageCount = Math.ceil(totalCount / pageSize);
 
-                if (pageNum > pageCount) {
-                    pageNum = pageCount;
+            if (pageNum > pageCount) {
+                pageNum = pageCount;
+            }
+
+            res.render('admin/post/index', {
+                posts: posts.slice((pageNum - 1) * pageSize, pageNum * pageSize),
+                pageNum: pageNum,
+                pageCount: pageCount,
+                authors: authors,
+                sortdir: sortdir,
+                sortby: sortby,
+                pretty: true,
+                filter: {
+                    category: req.query.category || "",
+                    author: req.query.author || ""
                 }
-
-                res.render('admin/post/index', {
-                    posts: posts.slice((pageNum - 1) * pageSize, pageNum * pageSize),
-                    pageNum: pageNum,
-                    pageCount: pageCount,
-                    authors: authors,
-                    sortdir: sortdir,
-                    sortby: sortby,
-                    pretty: true,
-                    filter: {
-                        category: req.query.category || "",
-                        author: req.query.author || ""
-                    }
-                });
             });
+        });
     });
 });
 
 router.get('/add', function (req, res, next) {
     res.render('admin/post/add', {
-        pretty: true
+        pretty: true,
+        post: {
+            category: {_id: ''}
+        }
     });
 });
 
@@ -93,7 +94,7 @@ router.post('/add', function (req, res, next) {
             content: content,
             author: author,
             published: true,
-            meta: { favorite: 0 },
+            meta: {favorite: 0},
             comments: [],
             created: new Date()
         });
@@ -111,18 +112,47 @@ router.post('/add', function (req, res, next) {
     })
 });
 
-router.get('/edit/:id', function (req, res, next) {
+router.get('/edit/:id', findPostById, function (req, res, next) {
+
+    res.render('admin/post/add', {
+        pretty: true,
+        post: req.post
+    });
+
 });
 
-router.post('/edit/:id', function (req, res, next) {
+router.post('/edit/:id', findPostById, function (req, res, next) {
+
+    var post = req.post;
+
+    var title = req.body.title.trim();
+    var category = req.body.category.trim();
+    var content = req.body.content;
+
+    post.title = title;
+    post.category = category;
+    post.content = content;
+
+    post.save(function (err, post) {
+        if (err) {
+            console.log('post edit err:' + err);
+            req.flash('error', '文章编辑失败');
+            res.redirect('/admin/posts/edit/' + post._id);
+        } else {
+            req.flash('info', '文章编辑成功');
+            res.redirect('/admin/posts');
+        }
+    })
+
 });
 
 router.get('/delete/:id', function (req, res, next) {
-    if (!req.params.id) {
+    var postId = req.params.id;
+    if (!postId) {
         return next(new Error('no post id provided'));
     }
 
-    Post.remove({ _id: req.params.id }).exec(function (err, rowsRemoved) {
+    PostServ.removePostById(postId, function (err, rowsRemoved) {
         if (err) {
             return next(err);
         }
@@ -137,3 +167,21 @@ router.get('/delete/:id', function (req, res, next) {
     });
 });
 
+function findPostById(req, res, next) {
+    var postId = req.params.id;
+    if (!postId) {
+        return next(new Error('no post id provided'));
+    }
+    PostServ.getPostById(postId, function (err, post) {
+
+        if (err)return next(err);
+
+        if (!post) {
+            return next(new Error('post not found:' + postId));
+        }
+
+        req.post = post;
+        next();
+
+    });
+}

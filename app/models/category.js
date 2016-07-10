@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 var CategorySchema = new Schema({
     name: { type: String, required: true },
     slug: { type: String, required: true },
-    created: { type: Date }
+    created: { type: Date, default: Date.now}
 });
 
 mongoose.model('Category', CategorySchema);

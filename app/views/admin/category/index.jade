@@ -6,6 +6,7 @@ block content
     ul
     each item in categories
         li= item.name
+            i.fa.fa-times-circle(onclick='category.show(\''+item._id+'\')')
 
-block scripts
-    script $(document).ready(function () { console.log('dom ready'); });
+block js
+    script(src='/js/admin/category.js')

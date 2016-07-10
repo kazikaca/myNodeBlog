@@ -12,6 +12,7 @@ router.get('/', function (req, res, next) {
     CategoryServ.getAllCategory(function (err, categories) {
         if(err)return next(err);
         res.render('admin/category/index', {
+            title: '分类列表',
             categories:categories,
             pretty: true
         });

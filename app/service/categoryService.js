@@ -6,5 +6,5 @@ module.exports = {
 };
 
 function getAllCategory(callback) {
-    return Category.find(callback);
+    return Category.find().sort({ created: 'desc'}).exec(callback);
 }
