@@ -1,12 +1,18 @@
 extends ../layout
 
 block content
-    h2.page-header 分类列表
-
-    ul
-    each item in categories
-        li= item.name
-            i.fa.fa-times-circle(onclick='category.show(\''+item._id+'\')')
+    .panel.panel-primary
+        .panel-heading
+            h3.panel-title 分类列表
+        .panel-body
+            ul.list-unstyled
+                each item in categories
+                    li.category-item(title= item.slug)= item.name
+                        span.category-ctrl
+                            a(href="/admin/categories/edit/"+item._id)
+                                i.fa.fa-pencil
+                            a(href="/admin/categories/delete/"+item._id)
+                                i.fa.fa-times-circle
 
 block js
     script(src='/js/admin/category.js')

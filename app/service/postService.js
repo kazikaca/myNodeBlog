@@ -20,12 +20,12 @@ function removePostById(id, callback) {
 }
 
 /**
- *
+ * 根据筛选条件获取文章
  * @param conditions 进行筛选的文章属性
  *  -object {key:val}
  * @param sort 进行排序的文章属性
  *  -object {'desc'/'asc': someKey}
- * @param Relation 关联查询的model
+ * @param relation 关联查询的model
  *  -array [someModels]
  * @param callback 回调函数
  *  -err

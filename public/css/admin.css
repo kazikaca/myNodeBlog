@@ -104,7 +104,24 @@ body {
     display: inline-block;
     border-radius: 50%;
 }
-
 .form-filter {
     margin-bottom: 20px;
+}
+
+/* category */
+.category-item{
+    padding: 0 10px;
+    line-height: 48px;
+}
+.category-item .category-ctrl{
+    float: right;
+}
+.category-item .category-ctrl a{
+    margin-left:15px;
+}
+.fa-times-circle{
+    color: #d9534f;
+}
+.category-item:hover{
+    background-color: #e0e0e0;
 }

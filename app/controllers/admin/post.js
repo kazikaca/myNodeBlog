@@ -1,9 +1,11 @@
 var express = require('express'),
     router = express.Router(),
     mongoose = require('mongoose'),
+    slug = require('slug'),
     Post = mongoose.model('Post'),
     User = mongoose.model('User'),
     Category = mongoose.model('Category'),
+    tool = require('../../common/tool'),
     PostServ = require('../../service/postService');
 
 module.exports = function (app) {
@@ -78,7 +80,7 @@ router.get('/add', function (req, res, next) {
 });
 
 router.post('/add', function (req, res, next) {
-    var title = req.body.title.trim();
+    var title = tool.chgToPinyin(req.body.title.trim());
     var category = req.body.category.trim();
     var content = req.body.content;
 
@@ -89,7 +91,7 @@ router.post('/add', function (req, res, next) {
 
         var post = new Post({
             title: title,
-            slug: title,
+            slug: slug(title),
             category: category,
             content: content,
             author: author,
@@ -99,9 +101,9 @@ router.post('/add', function (req, res, next) {
             created: new Date()
         });
 
-        post.save(function (err, post) {
+        post.save(function (err) {
             if (err) {
-                console.log('post/add error:', err);
+                console.log('posts/add error:', err);
                 req.flash('error', '文章保存失败');
                 res.redirect('/admin/posts/add');
             } else {
@@ -133,7 +135,7 @@ router.post('/edit/:id', findPostById, function (req, res, next) {
     post.category = category;
     post.content = content;
 
-    post.save(function (err, post) {
+    post.save(function (err) {
         if (err) {
             console.log('post edit err:' + err);
             req.flash('error', '文章编辑失败');
@@ -160,7 +162,7 @@ router.get('/delete/:id', function (req, res, next) {
         if (rowsRemoved) {
             req.flash('success', '文章删除成功');
         } else {
-            req.flash('success', '文章删除失败');
+            req.flash('error', '文章删除失败');
         }
 
         res.redirect('/admin/posts');

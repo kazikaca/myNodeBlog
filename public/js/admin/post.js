@@ -21,11 +21,7 @@ $(document).ready(function () {
 			delete query.author;
 		}
 
-		console.log(queryString.stringify(query));
 		window.location.url = window.location.origin + window.location.pathname + queryString.stringify(query);
 
 	});
-
-	// add page
-	CKEDITOR.replace('js-post-content');
 });
