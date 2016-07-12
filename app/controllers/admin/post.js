@@ -12,7 +12,7 @@ module.exports = function (app) {
     app.use('/admin/posts', router);
 };
 
-router.get('/', function (req, res, next) {
+router.get('/', tool.requireLogin, function (req, res, next) {
     // sort
     var sortby = req.query.sortby ? req.query.sortby : 'created';
     var sortdir = req.query.sortdir ? req.query.sortdir : 'desc';
@@ -70,7 +70,7 @@ router.get('/', function (req, res, next) {
     });
 });
 
-router.get('/add', function (req, res, next) {
+router.get('/add', tool.requireLogin, function (req, res, next) {
     res.render('admin/post/add', {
         pretty: true,
         post: {
@@ -79,7 +79,7 @@ router.get('/add', function (req, res, next) {
     });
 });
 
-router.post('/add', function (req, res, next) {
+router.post('/add', tool.requireLogin, function (req, res, next) {
     var title = tool.chgToPinyin(req.body.title.trim());
     var category = req.body.category.trim();
     var content = req.body.content;
@@ -114,7 +114,7 @@ router.post('/add', function (req, res, next) {
     })
 });
 
-router.get('/edit/:id', findPostById, function (req, res, next) {
+router.get('/edit/:id', tool.requireLogin, findPostById, function (req, res, next) {
 
     res.render('admin/post/add', {
         pretty: true,
@@ -123,7 +123,7 @@ router.get('/edit/:id', findPostById, function (req, res, next) {
 
 });
 
-router.post('/edit/:id', findPostById, function (req, res, next) {
+router.post('/edit/:id', tool.requireLogin, findPostById, function (req, res, next) {
 
     var post = req.post;
 
@@ -148,7 +148,7 @@ router.post('/edit/:id', findPostById, function (req, res, next) {
 
 });
 
-router.get('/delete/:id', function (req, res, next) {
+router.get('/delete/:id', tool.requireLogin, function (req, res, next) {
     var postId = req.params.id;
     if (!postId) {
         return next(new Error('no post id provided'));

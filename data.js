@@ -31,7 +31,7 @@ User.findOne(function (err, user) {
         }
 
         categories.forEach(function (category) {
-            for (var i = 0; i < 35; i++) {
+            for (var i = 0; i < 10; i++) {
                 var title = loremipsum({count: 1, units: 'sentence'});
                 var post = new Post({
                     title: title,

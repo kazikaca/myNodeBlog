@@ -11,7 +11,7 @@ module.exports = function (app) {
     app.use('/admin/categories', router);
 };
 
-router.get('/', function (req, res, next) {
+router.get('/', tool.requireLogin, function (req, res, next) {
     CategoryServ.getAllCategories(function (err, categories) {
         if (err)return next(err);
         res.render('admin/category/index', {
@@ -20,10 +20,9 @@ router.get('/', function (req, res, next) {
             pretty: true
         });
     });
-
 });
 
-router.get('/add', function (req, res, next) {
+router.get('/add', tool.requireLogin, function (req, res, next) {
     res.render('admin/category/add', {
         title: '添加分类',
         pretty: true,
@@ -31,7 +30,7 @@ router.get('/add', function (req, res, next) {
     });
 });
 
-router.post('/add', function (req, res, next) {
+router.post('/add', tool.requireLogin, function (req, res, next) {
     var name = req.body.name.trim();
 
     var newCategory = new Category({
@@ -52,7 +51,7 @@ router.post('/add', function (req, res, next) {
 
 });
 
-router.get('/edit/:id', getTheCategoryById, function (req, res, next) {
+router.get('/edit/:id', tool.requireLogin, getTheCategoryById, function (req, res, next) {
     res.render('admin/category/add', {
         title: '编辑分类',
         pretty: true,
@@ -60,7 +59,7 @@ router.get('/edit/:id', getTheCategoryById, function (req, res, next) {
     });
 });
 
-router.post('/edit/:id', getTheCategoryById, function (req, res, next) {
+router.post('/edit/:id', tool.requireLogin, getTheCategoryById, function (req, res, next) {
     var category = req.category;
     var name = req.body.name.trim();
 
@@ -79,7 +78,7 @@ router.post('/edit/:id', getTheCategoryById, function (req, res, next) {
     });
 });
 
-router.get('/delete/:id', function (req, res, next) {
+router.get('/delete/:id', tool.requireLogin, function (req, res, next) {
     var _id = req.params.id;
     if(!_id)return next(new Error('no category id provided'));
 

@@ -17,6 +17,9 @@ block main
                 a.navbar-brand(href="/admin/posts") 博客管理
             #navbar.navbar-collapse.collapse
                 ul.nav.navbar-nav.navbar-right
+                    if user
+                    li
+                        a=user.name+"("+user.email+")"
                     li
                         a(href="/admin/users/logout")
                             i.fa.fa-unlock-alt

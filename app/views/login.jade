@@ -1,0 +1,23 @@
+
+doctype html
+html(lang='en')
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport', content='width=device-width')
+        title= title
+        block css
+            link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.css')
+            link(rel='stylesheet', href='/css/login.css')
+    body
+
+        .container
+            .signin-card
+                form(method="post",action="/admin/users/login")
+                    h2 登录
+                    input.form-control.mb10(type="text",name="email",placeholder="邮箱",autofocus,required)
+                    input.form-control.mb10(type="password",name="password",placeholder="密码",required)
+                    input.btn.btn-lg.btn-primary.btn-block(type="submit",value="登录")
+
+        block js
+        if ENV_DEVELOPMENT
+            script(src='http://localhost:35729/livereload.js')

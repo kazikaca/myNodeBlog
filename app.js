@@ -4,8 +4,8 @@ var express = require('express'),
     mongoose = require('mongoose');
 
 mongoose.connect(config.db);
-var db = mongoose.connection;
-db.on('error', function () {
+var conn = mongoose.connection;
+conn.on('error', function () {
     throw new Error('unable to connect to database at ' + config.db);
 });
 
@@ -15,7 +15,9 @@ models.forEach(function (model) {
 });
 var app = express();
 
-require('./config/express')(app, config);
+require('./config/express')(app, config, conn);
+//passport 身份验证配置
+require('./config/passport').init();
 
 app.listen(config.port, function () {
     console.log('Express server listening on port ' + config.port);

@@ -6,7 +6,7 @@ var pinyin = require('pinyin');
  * @returns {string}
  */
 function chgToPinyin(str) {
-    return pinyin(str,{
+    return pinyin(str, {
         style: pinyin.STYLE_NORMAL,
         heteronym: false
     }).map(function (item) {
@@ -14,3 +14,12 @@ function chgToPinyin(str) {
     }).join(' ');
 }
 exports.chgToPinyin = chgToPinyin;
+
+function requireLogin(req, res, next) {
+    if(req.user){
+        next();
+    }else{
+        next(new Error("需要登录"))
+    }
+}
+exports.requireLogin = requireLogin;

@@ -1,0 +1,15 @@
+body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+.signin-card {
+    width: 375px;
+    padding: 40px 40px 80px;
+    background-color: #f7f7f7;
+    border: 1px solid lightgrey;
+    margin:100px auto;
+}
+
+.mb10{
+    margin-bottom: 10px;
+}
