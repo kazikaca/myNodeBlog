@@ -7,6 +7,7 @@ var moment = require('moment');
 var truncate = require('truncate');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var expressValidator = require('express-validator');
 var compress = require('compression');
 var methodOverride = require('method-override');
 var mongoose = require('mongoose');
@@ -46,6 +47,22 @@ module.exports = function(app, config, connection) {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({
         extended: true
+    }));
+    app.use(expressValidator({
+        errorFormatter: function(param, msg, value) {
+            var namespace = param.split('.')
+                , root    = namespace.shift()
+                , formParam = root;
+
+            while(namespace.length) {
+                formParam += '[' + namespace.shift() + ']';
+            }
+            return {
+                param : formParam,
+                msg   : msg,
+                value : value
+            };
+        }
     }));
 
     app.use(cookieParser());

@@ -80,8 +80,28 @@ router.get('/add', tool.requireLogin, function (req, res, next) {
 });
 
 router.post('/add', tool.requireLogin, function (req, res, next) {
+
+    //表单验证
+    req.checkBody('title','标题不能为空').notEmpty();
+    req.checkBody('category','请指定分类').notEmpty();
+    req.checkBody('content','内容不能为空').notEmpty();
+
+    var errors = req.validationErrors();
+    if (errors) {
+        return res.render('admin/post/add',{
+            formInvalids : errors,
+            post:{
+                title : req.body.title,
+                category : {
+                    _id :req.body.category
+                },
+                content : req.body.content
+            }
+        });
+    }
+
     var title = tool.chgToPinyin(req.body.title.trim());
-    var category = req.body.category.trim();
+    var category = req.body.category;
     var content = req.body.content;
 
     User.findOne({}, function (err, author) {

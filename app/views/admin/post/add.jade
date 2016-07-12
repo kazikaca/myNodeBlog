@@ -2,22 +2,26 @@ extends ../layout
 
 block content
     h2.page-header=(post._id ? "编辑" : "添加")+"文章"
+    if formInvalids && formInvalids.length
+        .error
+        each f in formInvalids
+            p.alert.alert-danger=f.msg
 
     form.vertical-form(method="post", action="/admin/posts/"+ (post._id ? "edit/"+post._id:"add"))
         div.form-group
             label(for="title") 标题
-            input.form-control.input-lg#title(name="title",placeholder="请输入标题...",value= post.title)
+            input.form-control.input-lg#title(name="title",placeholder="请输入标题...",value= post.title,required)
 
         div.form-group
             label(for="category") 分类
-            select.form-control.input-lg#category(name="category")
+            select.form-control.input-lg#category(name="category",required)
                 option(value="") - 选择分类 -
                 each category in categories
                     option(value=category._id selected=(category._id.toString() === post.category._id.toString()))= category.name
 
         div.form-group
             label(for="js-post-content") 内容
-            textarea#js-post-content.form-control(name="content")= post.content
+            textarea#js-post-content.form-control(name="content",required)= post.content
 
         button.btn.btn-info(type="submit")= post._id?'编辑':'发布'
 
