@@ -5,10 +5,9 @@ block content
     each post in posts
         div.post
             h3.post-title
-                a(href="/posts/view/" + post.slug, target="_blank")
-                    =post.title
+                a(href="/posts/view/" + post.slug, target="_blank")= post.title
             div.post-abstract
-                =truncate(post.content, 160)
+                != truncate(post.content, 160)
             div.post-meta
                 span.post-created 时间:&nbsp;
                     =moment(post.created).format('YYYY-MM-DD')
