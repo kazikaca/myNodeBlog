@@ -29,6 +29,7 @@ router.get('/modifyPassword',
     tool.requireLogin,
     function (req, res, next) {
         res.render('admin/user/modifyPassword', {
+            pretty: true,
             title: '修改密码'
         });
     });
@@ -55,6 +56,7 @@ router.post('/modifyPassword',
         }
         if (errors) {
             return res.render('admin/user/modifyPassword', {
+                pretty: true,
                 title: '修改密码',
                 formInvalids: errors,
                 password: oldPassword,
@@ -69,6 +71,7 @@ router.post('/modifyPassword',
                 console.log('user/modifyPassword error:', err);
                 req.flash('error', '密码修改失败');
                 res.render('admin/user/modifyPassword', {
+                    pretty: true,
                     title: '修改密码',
                     password: oldPassword,
                     newPassword: newPassword
@@ -81,8 +84,66 @@ router.post('/modifyPassword',
     }
 );
 
+router.get('/add', function (req, res, next) {
+    res.render('admin/user/add', {
+        pretty: true,
+        title: '添加用户',
+        userCreate:{}
+    });
+});
+
+router.post('/add', function (req, res, next) {
+    var name = req.body.name,
+        email = req.body.email,
+        password = req.body.password,
+        confirmPassword = req.body.confirmPassword;
+
+    //表单验证
+    req.checkBody('name', '请输入姓名').notEmpty();
+    req.checkBody('email', '请输入邮箱').notEmpty();
+    req.checkBody('email', '无效邮箱').isEmail();
+    req.checkBody('password', '请输入密码').notEmpty();
+    req.checkBody('confirmPassword', '请确认密码').notEmpty();
+    req.checkBody('confirmPassword', '两次密码不匹配').equals(password);
+
+    var newUser = {
+        name: name,
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+        created: new Date()
+    };
+
+    var errors = req.validationErrors();
+    if (errors) {
+        return res.render('admin/user/add', {
+            pretty: true,
+            title: '添加用户',
+            formInvalids: errors,
+            userCreate: newUser
+        });
+    }
+    newUser.password = md5(password);
+    UserServ.createUser(newUser,function(err,user){
+        if(err){
+            console.log('admin/users/add error:', err);
+            req.flash('error','添加失败');
+            res.render('admin/user/add',{
+                pretty: true,
+                title: '添加用户',
+                userCreate:newUser
+            });
+        }else{
+            req.flash('success','添加成功');
+            res.redirect('/admin/users/add');
+
+        }
+    });
+});
+
 router.get('/modifyInfo', function (req, res, next) {
     res.render('admin/user/modifyInfo', {
+        pretty: true,
         title: '修改信息',
         userModify: deepClone(req.sessionUser)
     });
@@ -103,6 +164,7 @@ router.post('/modifyInfo',
         var errors = req.validationErrors();
         if (errors) {
             return res.render('admin/user/modifyInfo', {
+                pretty: true,
                 title: '修改信息',
                 formInvalids: errors,
                 userModify: {
@@ -119,6 +181,7 @@ router.post('/modifyInfo',
                 console.log('user/modifyInfo error:', err);
                 req.flash('error', '修改失败');
                 res.render('admin/user/modifyInfo', {
+                    pretty: true,
                     title: '修改信息',
                     userModify: {
                         name: name,

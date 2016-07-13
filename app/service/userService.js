@@ -3,8 +3,8 @@ var mongoose = require('mongoose'),
 
 /**
  * 根据id获取用户
- * @param id
- * @param callback
+ * @param id{string}
+ * @param callback{function}
  *  -err
  *  -user
  */
@@ -13,3 +13,16 @@ function getUserById(id,callback) {
         .exec(callback);
 }
 exports.getUserById = getUserById;
+
+/**
+ *
+ * @param user{object}
+ * @param callback{function}
+ *  -err
+ *  -user
+ */
+function createUser(user,callback){
+    var _user = new User(user);
+    _user.save(callback);
+}
+exports.createUser = createUser;

@@ -89,6 +89,7 @@ router.post('/add', tool.requireLogin, function (req, res, next) {
     var errors = req.validationErrors();
     if (errors) {
         return res.render('admin/post/add',{
+            pretty: true,
             formInvalids : errors,
             post:{
                 title : req.body.title,
@@ -162,6 +163,7 @@ router.post('/edit/:id', tool.requireLogin, findPostById, function (req, res, ne
         post.category = {_id : category};
         post.content = content;
         return res.render('admin/post/add',{
+            pretty: true,
             formInvalids : errors,
             post: post
         });

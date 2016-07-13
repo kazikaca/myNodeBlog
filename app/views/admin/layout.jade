@@ -47,6 +47,10 @@ block main
                             | &nbsp;添加分类
 
                 ul.nav.nav-sidebar
+                    li(class={active: pageName === "/admin/users/add"})
+                        a(href="/admin/users/add")
+                            i.fa.fa-user-plus
+                            | &nbsp;添加用户
                     li(class={active: pageName === "/admin/users/modifyPassword"})
                         a(href="/admin/users/modifyPassword")
                             i.fa.fa-lock
