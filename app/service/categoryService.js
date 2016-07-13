@@ -7,6 +7,11 @@ module.exports = {
     removeCategoryById: removeCategoryById
 };
 
+/**
+ * @param callback
+ *  -err
+ *  -Categories
+ */
 function getAllCategories(callback) {
     Category.find()
         .sort({created: 'desc'})

@@ -16,7 +16,7 @@ function chgToPinyin(str) {
 exports.chgToPinyin = chgToPinyin;
 
 function requireLogin(req, res, next) {
-    if(req.user){
+    if(req.sessionUser){
         next();
     }else{
         next(new Error("需要登录"))

@@ -18,8 +18,9 @@ var MongoStore = require('connect-mongo')(session);
 var flash = require('connect-flash');
 var messages = require('express-messages');
 
-var Category = mongoose.model('Category');
-var User = mongoose.model('User');
+//service
+var CategoryServ = require('../app/service/categoryService');
+var UserServ = require('../app/service/userService');
 
 module.exports = function(app, config, connection) {
     var env = process.env.NODE_ENV || 'development';
@@ -33,7 +34,7 @@ module.exports = function(app, config, connection) {
         app.locals.pageName = req.path;
         app.locals.moment = moment;
         app.locals.truncate = truncate;
-        Category.find(function (err, categories) {
+        CategoryServ.getAllCategories(function (err, categories) {
             if (err) {
                 return next(err);
             }
@@ -77,13 +78,13 @@ module.exports = function(app, config, connection) {
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(function (req, res, next) {
-        req.user = null;
+        req.sessionUser = null;
         if(req.session.passport && req.session.passport.user){
-            User.findById(req.session.passport.user,function (err, user) {
+            UserServ.getUserById(req.session.passport.user,function (err, user) {
                 if(err) return next(err);
 
                 user.password = null;
-                req.user = user;
+                req.sessionUser = user;
                 next();
             });
         }else{
@@ -94,7 +95,7 @@ module.exports = function(app, config, connection) {
     app.use(flash());
     app.use(function (req, res, next) {
         res.locals.messages = messages(req, res);
-        app.locals.user = req.user;
+        app.locals.user = req.sessionUser;
         next();
     });
 
