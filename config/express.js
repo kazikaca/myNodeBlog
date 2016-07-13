@@ -84,7 +84,7 @@ module.exports = function(app, config, connection) {
                 if(err) return next(err);
 
                 user.password = null;
-                req.sessionUser = user;
+                req.sessionUser = user;//req.sessionUser不带有密码
                 next();
             });
         }else{
@@ -95,7 +95,7 @@ module.exports = function(app, config, connection) {
     app.use(flash());
     app.use(function (req, res, next) {
         res.locals.messages = messages(req, res);
-        app.locals.user = req.sessionUser;
+        app.locals.currentUser = req.sessionUser;
         next();
     });
 

@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+    if formInvalids && formInvalids.length
+        .error
+        each f in formInvalids
+            p.alert.alert-danger=f.msg
+    .panel.panel-primary
+        .panel-heading
+            h3.panel-title 修改资料
+        .panel-body
+            form.form-horizontal(method="post" action="/admin/users/modifyInfo")
+                .form-group
+                    label.col-sm-1.control-label(for="name") 名字
+                    .col-sm-11
+                        input.form-control#name(type="name",placeholder="名字",name="name",value=userModify.name,required)
+                .form-group
+                    label.col-sm-1.control-label(for="email") 邮箱
+                    .col-sm-11
+                        input.form-control#email(type="email",placeholder="邮箱",name="email",value=userModify.email,required)
+                .form-group
+                    label.col-sm-1.control-label
+                    .col-sm-11
+                        button.btn.btn-default(type="submit") 修改

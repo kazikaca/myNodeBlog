@@ -19,7 +19,7 @@ block main
                 ul.nav.navbar-nav.navbar-right
                     if user
                     li
-                        a=user.name+"("+user.email+")"
+                        a(href="/admin/users/modifyInfo")=currentUser.name+"("+currentUser.email+")"
                     li
                         a(href="/admin/users/logout")
                             i.fa.fa-unlock-alt
@@ -47,7 +47,7 @@ block main
                             | &nbsp;添加分类
 
                 ul.nav.nav-sidebar
-                    li(class={active: pageName === "/admin/users/password"})
+                    li(class={active: pageName === "/admin/users/modifyPassword"})
                         a(href="/admin/users/modifyPassword")
                             i.fa.fa-lock
                             | &nbsp;修改密码
