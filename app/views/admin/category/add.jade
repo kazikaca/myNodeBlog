@@ -1,16 +1,20 @@
 extends ../layout
 
 block content
+    if formInvalids && formInvalids.length
+        .error
+        each f in formInvalids
+            p.alert.alert-danger=f.msg
     .panel.panel-primary
         .panel-heading
-            h3.panel-title= (category._id?'修改':'添加')+'分类'
+            h3.panel-title= (category._id ? '修改' : '添加') + '分类'
         .panel-body
-            form.form-horizontal(method="post" action="/admin/categories/"+(category._id?'edit/'+category._id:'add'))
+            form.form-horizontal(method="post" action="/admin/categories/" + (category._id ? 'edit/' + category._id : 'add'))
                 .form-group
                     label.col-sm-1.control-label(for="name") 分类名称
                     .col-sm-11
-                        input.form-control#name(type="text",placeholder="分类名称",name="name",value= category.name)
+                        input.form-control#name(type="text",placeholder="分类名称",name="name",value= category.name,required)
                 .form-group
                     label.col-sm-1.control-label
                     .col-sm-11
-                        button.btn.btn-default(type="submit")= category._id?'修改':'添加'
+                        button.btn.btn-default(type="submit")= category._id ? '修改' : '添加'

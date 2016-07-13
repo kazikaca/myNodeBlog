@@ -31,6 +31,20 @@ router.get('/add', tool.requireLogin, function (req, res, next) {
 });
 
 router.post('/add', tool.requireLogin, function (req, res, next) {
+
+    //表单验证
+    req.checkBody('name','名称不能为空').notEmpty();
+
+    var errors = req.validationErrors();
+    if (errors) {
+        return res.render('admin/category/add',{
+            formInvalids : errors,
+            category: {
+                name: req.body.name
+            }
+        });
+    }
+
     var name = req.body.name.trim();
 
     var newCategory = new Category({
@@ -60,8 +74,22 @@ router.get('/edit/:id', tool.requireLogin, getTheCategoryById, function (req, re
 });
 
 router.post('/edit/:id', tool.requireLogin, getTheCategoryById, function (req, res, next) {
+
     var category = req.category;
     var name = req.body.name.trim();
+
+    //表单验证
+    req.checkBody('name','名称不能为空').notEmpty();
+
+    var errors = req.validationErrors();
+    if (errors) {
+        return res.render('admin/category/add',{
+            formInvalids : errors,
+            category: {
+                name: name
+            }
+        });
+    }
 
     category.name = name;
     category.slug = slug(tool.chgToPinyin(name));

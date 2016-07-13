@@ -151,6 +151,22 @@ router.post('/edit/:id', tool.requireLogin, findPostById, function (req, res, ne
     var category = req.body.category.trim();
     var content = req.body.content;
 
+    //表单验证
+    req.checkBody('title','标题不能为空').notEmpty();
+    req.checkBody('category','请指定分类').notEmpty();
+    req.checkBody('content','内容不能为空').notEmpty();
+
+    var errors = req.validationErrors();
+    if (errors) {
+        post.title = title;
+        post.category = {_id : category};
+        post.content = content;
+        return res.render('admin/post/add',{
+            formInvalids : errors,
+            post: post
+        });
+    }
+
     post.title = title;
     post.category = category;
     post.content = content;
