@@ -7,6 +7,7 @@ var paths = {
     client: [
         'public/**/*.js',
         'public/**/*.html',
+        'public/*.html',
         'public/**/*.css'
     ],
     server: {

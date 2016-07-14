@@ -36,4 +36,5 @@ block content
                             a(href="/posts?page=" + currentPage)= currentPage++
 
 block scripts
-    script $(document).ready(function () { console.log('dom ready'); });
+    script(src="/js/highlight/highlight.pack.js")
+    script $(document).ready(function () {hljs.initHighlightingOnLoad();});
