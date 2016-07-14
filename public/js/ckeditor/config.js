@@ -35,4 +35,7 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
+
+    //code editor
+    config.extraPlugins = 'clipboard,lineutils,widget,dialog,codesnippet';
 };

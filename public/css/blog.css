@@ -183,8 +183,11 @@ h6, .h6 {
 }
 
 .post-view .post-content {
-    text-indent: 2em;
     text-align: justify;
+}
+
+.post-view .post-content p{
+    text-indent: 2em;
 }
 
 .post-comments,
