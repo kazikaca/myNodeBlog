@@ -101,7 +101,7 @@ router.post('/add', tool.requireLogin, function (req, res, next) {
         });
     }
 
-    var title = tool.chgToPinyin(req.body.title.trim());
+    var title = req.body.title.trim();
     var category = req.body.category;
     var content = req.body.content;
 
@@ -112,7 +112,7 @@ router.post('/add', tool.requireLogin, function (req, res, next) {
 
         var post = new Post({
             title: title,
-            slug: slug(title),
+            slug: slug(tool.chgToPinyin(title)),
             category: category,
             content: content,
             author: author,
