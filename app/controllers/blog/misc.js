@@ -6,7 +6,10 @@ module.exports = function (app) {
 };
 
 router.get('/', function (req, res, next) {
-    res.redirect('/posts')
+    res.render('blog/test', {
+        title: '测试页面',
+        pretty: true
+    });
 });
 
 router.get('/about', function (req, res, next) {

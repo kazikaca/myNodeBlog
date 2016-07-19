@@ -1,5 +1,7 @@
+var _winHeight = 0;//窗口高度
 $(function () {
     $(window).scroll(myScrollFn);
+    _winHeight = $(window).height();
 });
 
 function debounce(func, wait, immediate) {
@@ -18,5 +20,8 @@ function debounce(func, wait, immediate) {
 }
 
 var myScrollFn = debounce(function() {
-    console.log(new Date().getSeconds());
+    var _scrollHeight = $(window).scrollTop();
+    if(_scrollHeight >= _winHeight){
+
+    }
 }, 400);
