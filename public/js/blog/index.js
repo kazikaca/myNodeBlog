@@ -1,7 +1,7 @@
 var _winHeight = 0;//窗口高度
 $(function () {
-    $(window).scroll(myScrollFn);
     _winHeight = $(window).height();
+    $(window).scroll(myScrollFn);
 });
 
 function debounce(func, wait, immediate) {

@@ -1,12 +1,14 @@
 body {
     position: relative;
     margin: 0;
+    background-color: #F2F2F2;
 }
 
 .bg-con {
     position: relative;
-    height: 100vh;
-    background: url("../img/banner.jpg") no-repeat top center;
-    -webkit-background-size: cover;
+    height: 42vh;
+    min-height: 245px;
+    background: linear-gradient(rgba(0, 0, 0, .2), rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, .2)),
+    url("../img/bg1.jpg") no-repeat bottom center;
     background-size: cover;
 }
