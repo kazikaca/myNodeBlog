@@ -1,52 +1,65 @@
 var gulp = require('gulp'),
     nodemon = require('gulp-nodemon'),
     plumber = require('gulp-plumber'),
-    livereload = require('gulp-livereload');
+    browserSync = require('browser-sync').create(),
+    gutil = require('gulp-util'),
+    sass = require('gulp-sass'),
+    autoprefixer = require('gulp-autoprefixer');
 
 var paths = {
     client: [
         'public/**/*.js',
         'public/**/*.html',
-        'public/*.html',
-        'public/**/*.css'
+        'public/**/*.css',
+        'app/views/**/*.jade'
     ],
+    scss: 'public/scss/**/*.scss',
+    css: 'public/css',
     server: {
         index: 'app.js'
     }
 };
 
 var nodemonConfig = {
-    script: paths.server.index,
-    env: {
-        "NODE_ENV": "development"
-    },
-    ext: 'js jade',
-    stdout: false
+    script: paths.server.index
 };
 
-gulp.task('develop', function () {
-    livereload.listen();
-    nodemon(nodemonConfig).on('readable', function () {
-        this.stdout.on('data', function (chunk) {
-            if(/^Express server listening on port/.test(chunk)){
-                livereload.changed(__dirname+'\\app');
-            }
-        });
-        this.stdout.pipe(process.stdout);
-        this.stderr.pipe(process.stderr);
+gulp.task('livereload', ['sass'], function () {
+    nodemon({
+        script: nodemonConfig.script,
+        ignore: ['public', 'node_modules'],
+        env: {
+            'NODE_ENV': 'development'
+        }
     });
+    browserSync.init(null, {
+        proxy: 'http://localhost:3000',
+        files: paths.client,
+        open: true,
+        port: 7000
+    });
+    gulp.watch(paths.scss, ['sass']);
 });
 
-/*gulp.task('serve', ['livereload'], function() {
-    return nodemon(nodemonConfig);
-});*/
+var errorHandler = {
+    errorHandler: function (e) {
+        // 控制台发声,错误时beep一下
+        gutil.beep();
+        gutil.log(e);
+        this.emit('end');
+    }
+};
 
-gulp.task('livereload', function() {
-    livereload.listen();
-    return gulp.watch(paths.client, function(event) {
-        livereload.changed(event.path);
-    });
+gulp.task('sass',function () {
+    return gulp.src(paths.scss)
+        .pipe(plumber(errorHandler))
+        .pipe(sass())
+        .pipe(autoprefixer({
+            browsers: ['last 2 versions', 'Android >= 4.0', 'ie 6-8', 'ios 7'],
+            cascade: true
+        }))
+        .pipe(gulp.dest(paths.css))
+        .pipe(browserSync.reload({stream: true}));
 });
 
-// gulp.task('default', ['serve', 'livereload']);
-gulp.task('default', ['develop','livereload']);
+gulp.task('default',['livereload']);

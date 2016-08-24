@@ -189,7 +189,7 @@ router.post('/modifyInfo',
                     }
                 });
             } else {
-                req.flash('success', '修改成功');
+                req.flash('success', '修改成功!');
                 res.redirect('/admin/users/modifyInfo');
             }
         });

@@ -82,6 +82,10 @@ router.get('/view/:id', function (req, res, next) {
                 return next(err);
             }
 
+            if(!post){
+                return next(new Error('no such post'));
+            }
+
             res.render('blog/view', {
                 title: post.title,
                 post: post

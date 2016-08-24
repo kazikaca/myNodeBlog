@@ -170,6 +170,7 @@ router.post('/edit/:id', tool.requireLogin, findPostById, function (req, res, ne
     }
 
     post.title = title;
+    post.slug = slug(tool.chgToPinyin(title));
     post.category = category;
     post.content = content;
 

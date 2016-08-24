@@ -32,9 +32,12 @@
     "truncate": "^2.0.0"
   },
   "devDependencies": {
+    "browser-sync": "^2.14.0",
     "gulp": "^3.9.0",
-    "gulp-livereload": "^3.8.0",
+    "gulp-autoprefixer": "^3.1.1",
     "gulp-nodemon": "^2.1.0",
-    "gulp-plumber": "^1.0.0"
+    "gulp-plumber": "^1.1.0",
+    "gulp-sass": "^2.3.2",
+    "gulp-util": "^3.0.7"
   }
 }
