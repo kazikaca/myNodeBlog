@@ -23,6 +23,14 @@ body {
     background: url('../img/logo.png') no-repeat center center;
 }
 
+.article-cube{
+    border-radius: 10px;
+    background-color: $clr-bg-article;
+}
+
+.article-cube-title{
+}
+
 .break{
     height: $h-break;
     color: $clr-break;
