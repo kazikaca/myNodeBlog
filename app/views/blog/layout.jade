@@ -38,3 +38,7 @@ block main
                             li
                                 a(href="/posts/category/" + category.name, target="_blank")
                                     = category.name
+
+block scripts
+    script(src="/js/highlight/highlight.pack.js")
+    script $(document).ready(function () {hljs.initHighlightingOnLoad();});

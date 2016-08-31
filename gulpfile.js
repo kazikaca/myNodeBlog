@@ -54,10 +54,11 @@ gulp.task('sass',function () {
     return gulp.src(paths.scss)
         .pipe(plumber(errorHandler))
         .pipe(sass())
-        .pipe(autoprefixer({
+        //开发时编译好慢所以注释的
+        /*.pipe(autoprefixer({
             browsers: ['last 2 versions', 'Android >= 4.0', 'ie 6-8', 'ios 7'],
             cascade: true
-        }))
+        }))*/
         .pipe(gulp.dest(paths.css))
         .pipe(browserSync.reload({stream: true}));
 });
