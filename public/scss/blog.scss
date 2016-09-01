@@ -1,0 +1,11 @@
+@import "partial/reset";
+@import "partial/lib";
+@import "partial/variable";
+@import "partial/common";
+
+.banner-con{
+    height: $h-banner;
+    padding-top: $h-nav;
+    background: url("../img/bg2.jpg") no-repeat bottom center;
+    background-size: cover;
+}

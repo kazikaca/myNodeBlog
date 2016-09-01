@@ -26,8 +26,8 @@ router.get('/', function (req, res, next) {
                 pageNum = pageCount;
             }
 
-            res.render('blog/index', {
-                title:'我的博客',
+            res.render('blog/posts', {
+                title:'所有文章',
                 posts: posts.slice((pageNum - 1) * pageSize, pageNum * pageSize),
                 pageNum: pageNum,
                 pageCount: pageCount,

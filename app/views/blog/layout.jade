@@ -6,37 +6,26 @@ append css
     link(rel='stylesheet', href='/css/blog.css')
 
 block main
-    block header
-        .blog-masthead
-            .container
-                nav.blog-nav
-                    if pageName === '/posts'
-                        a.blog-nav-item.active(href="/posts")  首页
-                    else
-                        a.blog-nav-item(href="/posts")  首页
-
-                    if pageName === '/about'
-                        a.blog-nav-item.active(href="/about") 关于
-                    else
-                        a.blog-nav-item(href="/about") 关于
-
-                    if pageName === '/contact'
-                        a.blog-nav-item.active(href="/contact") 联系
-                    else
-                        a.blog-nav-item(href="/contact") 联系
-
-    .container
+    .banner-con.rel
+        nav.v1-nav.v1-nav-tran
+            .container.v1-nav-inner
+                a.v1-nav-link.dib.h100pct.v1-nav-logo.f20(href="/")
+                .dib.r.f16
+                    a.v1-nav-link.mr30(href="/") 首页
+                    a.v1-nav-link.mr30.pl20(href="/posts") 文章
+                    a.v1-nav-link.pl20(href="/about") 关于
+    .container.mt20
         .row
-            .col-sm-8.blog-main
+            .col-sm-8.mt10.pb30
                 != messages()
                 block content
-            .col-sm-3.col-sm-offset-1.blog-sidebar
-                .sidebar-module
-                    h4 文章分类
-                    ol.list-unstyled
+            .col-sm-3.mt10
+                .v1-cube.p10
+                    h4 分类列表
+                    ol.list-unstyled.pl20.pr20
                         each category in categories
-                            li
-                                a(href="/posts/category/" + category.name, target="_blank")
+                            li.lh24
+                                a(href="/posts/category/" + category.name, title="文章分类："+category.name)
                                     = category.name
 
 block scripts

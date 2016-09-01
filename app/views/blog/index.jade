@@ -1,36 +1,128 @@
-extends layout
+extends ../layout
 
-block content
-    h2.page-header 我的博客
-    each post in posts
-        div.post
-            h3.post-title
-                a(href="/posts/view/" + post.slug, target="_blank")= post.title
-            div.post-abstract
-                != truncate(post.content, 160)
-            div.post-meta
-                span.post-created 时间:&nbsp;
-                    =moment(post.created).format('YYYY-MM-DD')
-                span.post-author 作者:&nbsp;
-                    =post.author.name
-                span.post-category 分类:&nbsp;
-                    a(href="/posts/category/" + post.category.name, target="_blank")
-                        =post.category.name
-                span.post-comment 评论:&nbsp;
-                    =post.comments.length || 0
-                span.post-favorite 被赞:&nbsp;
-                    =post.meta.favorite || 0
-                span.post-link
-                    a(href="/posts/view/" + post.slug, target="_blank") 查看全文
+append css
+    link(rel='stylesheet', href='/components/font-awesome/css/font-awesome.css')
+    link(rel='stylesheet', href='/css/index.css')
 
-    if pageCount > 1
-        nav
-            ul.pagination
-                - var currentPage = 1
-                while currentPage < pageCount
-                    if (currentPage === pageNum)
-                        li.active
-                            a(href="/posts?page=" + currentPage)= currentPage++
-                    else
-                        li
-                            a(href="/posts?page=" + currentPage)= currentPage++
+block main
+    .bg-con.rel
+        nav.v1-nav.v1-nav-tran
+            .container.v1-nav-inner
+                a.v1-nav-link.dib.h100pct.v1-nav-logo.f20(href="/")
+                .dib.r.f16
+                    a.v1-nav-link.mr30(href="/") 首页
+                    a.v1-nav-link.mr30.pl20(href="/posts") 文章
+                    a.v1-nav-link.pl20(href="/about") 关于
+        .blog-circle-name.auto.tran_vm.rel
+    .container.mt20
+        .row
+            .col-sm-8.mt10.pb30
+                article.v1-cube.mb10.pt10.pb10.pl30.pr30
+                    h3.g6
+                        ="文章标题文章标题文章标题文章标题"
+                    .article-cube-info.g9
+                        span.mr5 v1sionary
+                        span.mr5 写于
+                        span.mr30 2016/08/30
+                        span.mr15
+                            i.fa.fa-heart.mr5(aria-hidden=true)
+                            =0
+                        span.mr15
+                            i.fa.fa-commenting.mr5(aria-hidden=true)
+                            =0
+                        span
+                            i.fa.fa-tag.mr5(aria-hidden=true)
+                            ="文章分类"
+                    p.mt20
+                        ="文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容"
+                    .break
+                article.v1-cube.mb10.pt10.pb10.pl30.pr30
+                    h3.g6
+                        ="文章标题文章标题文章标题文章标题"
+                    .article-cube-info.g9
+                        span.mr5 v1sionary
+                        span.mr5 写于
+                        span.mr30 2016/08/30
+                        span.mr15
+                            i.fa.fa-heart.mr5(aria-hidden=true)
+                            =0
+                        span.mr15
+                            i.fa.fa-commenting.mr5(aria-hidden=true)
+                            =0
+                        span
+                            i.fa.fa-tag.mr5(aria-hidden=true)
+                            ="文章分类"
+                    p.mt20
+                        ="文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容"
+                    .break
+                article.v1-cube.mb10.pt10.pb10.pl30.pr30
+                    h3.g6
+                        ="文章标题文章标题文章标题文章标题"
+                    .article-cube-info.g9
+                        span.mr5 v1sionary
+                        span.mr5 写于
+                        span.mr30 2016/08/30
+                        span.mr15
+                            i.fa.fa-heart.mr5(aria-hidden=true)
+                            =0
+                        span.mr15
+                            i.fa.fa-commenting.mr5(aria-hidden=true)
+                            =0
+                        span
+                            i.fa.fa-tag.mr5(aria-hidden=true)
+                            ="文章分类"
+                    p.mt20
+                        ="文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容"
+                    .break
+                article.v1-cube.mb10.pt10.pb10.pl30.pr30
+                    h3.g6
+                        ="文章标题文章标题文章标题文章标题"
+                    .article-cube-info.g9
+                        span.mr5 v1sionary
+                        span.mr5 写于
+                        span.mr30 2016/08/30
+                        span.mr15
+                            i.fa.fa-heart.mr5(aria-hidden=true)
+                            =0
+                        span.mr15
+                            i.fa.fa-commenting.mr5(aria-hidden=true)
+                            =0
+                        span
+                            i.fa.fa-tag.mr5(aria-hidden=true)
+                            ="文章分类"
+                    p.mt20
+                        ="文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容"
+                    .break
+                article.v1-cube.mb10.pt10.pb10.pl30.pr30
+                    h3.g6
+                        ="文章标题文章标题文章标题文章标题"
+                    .article-cube-info.g9
+                        span.mr5 v1sionary
+                        span.mr5 写于
+                        span.mr30 2016/08/30
+                        span.mr15
+                            i.fa.fa-heart.mr5(aria-hidden=true)
+                            =0
+                        span.mr15
+                            i.fa.fa-commenting.mr5(aria-hidden=true)
+                            =0
+                        span
+                            i.fa.fa-tag.mr5(aria-hidden=true)
+                            ="文章分类"
+                    p.mt20
+                        ="文章内容文章内容文章内容文章内容文章内容文章内章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容文章内容"
+                    a.dib(href="http://www.baidu.com",target="_blank") 查看全文
+                    .break
+                .v1-cube.p10.tc
+                    a(href="/posts",title="查看更多") 查看更多
+            .col-sm-3.mt10
+                .v1-cube.p10
+                    h4 分类列表
+                    ol.list-unstyled.pl20.pr20
+                        li.lh24 claphappyLight
+                        li.lh24 catcake
+                        li.lh24 FontPenetration
+                        li.lh24 vadimsWriting
+                        li.lh24 Alywriting
+block scripts
+    script(src='/js/blog/index.js')

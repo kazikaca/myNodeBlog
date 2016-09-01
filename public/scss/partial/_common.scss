@@ -1,6 +1,55 @@
 @import "variable";
 
+body {
+    position: relative;
+    background-color: $clr-bg;
+}
+
+.break {
+    height: $h-break;
+    color: $clr-break;
+    background: url('../../img/break.svg') no-repeat center center;
+    background-size: 64px 64px;
+}
+
 .v1-cube{
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: $clr-bg-article;
+}
+
+.v1-nav-link{
+    color: inherit;
+    &:link,&:visited,&:hover,&:active{
+        color: inherit;
+    }
+}
+
+.v1-nav {
+    top: 0;
+    left: 0;
+    right: 0;
+    color: #fff;
+    background-color: rgba(255,255,255,.06);
+    position: absolute;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    &.v1-nav-fixed{
+        background-color: #fff;
+        position: fixed;
+        color: $clr-base-brown;
+        z-index: 100;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        .v1-nav-logo{
+            background-image: url('../../img/nav-logo-br.png');
+        }
+    }
+}
+
+.v1-nav-inner{
+    height: $h-nav;
+    line-height: $h-nav;
+}
+
+.v1-nav-logo{
+    width: 188px;
+    background: url('../../img/nav-logo-wh.png') no-repeat center center;
 }

@@ -1,11 +1,7 @@
 extends layout
 
 block content
-    .v1-cube.mb10.pt10.pb10.pl30.pr30.f16.g9
-        = category.name
-        span &nbsp;分类&nbsp;
-        = "(" + posts.length + ")"
-
+    .v1-cube.mb10.pt10.pb10.pl30.pr30.f16.g9 所有文章
     each post in posts
         article.v1-cube.mb10.pt10.pb10.pl30.pr30
             h3.g6
@@ -30,7 +26,14 @@ block content
             a.dib(href="/posts/view/" + post.slug, target="_blank", title="查看全文") 查看全文
             .break
 
-
-
-
-
+    if pageCount > 1
+        nav
+            ul.pagination
+                - var currentPage = 1
+                while currentPage < pageCount
+                    if (currentPage === pageNum)
+                        li.active
+                            a(href="/posts?page=" + currentPage)= currentPage++
+                    else
+                        li
+                            a(href="/posts?page=" + currentPage)= currentPage++
