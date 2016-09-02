@@ -1,14 +1,20 @@
 var express = require('express'),
-    router = express.Router();
+    router = express.Router(),
+    PostServ = require('../../service/postService');
 
 module.exports = function (app) {
     app.use('/', router);
 };
 
 router.get('/', function (req, res, next) {
-    res.render('blog/index', {
-        title: '首页',
-        pretty: true
+    PostServ.getNewest5Posts(function (err, posts) {
+        if(err)return next(err);
+        res.render('blog/index', {
+            title: '首页',
+            posts: posts,
+            pretty: true
+        });
+
     });
 });
 

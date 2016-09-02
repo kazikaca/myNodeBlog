@@ -4,7 +4,8 @@ var mongoose = require('mongoose'),
 module.exports = {
     getPostById: getPostById,
     removePostById: removePostById,
-    getPostsWithQuery: getPostsWithQuery
+    getPostsWithQuery: getPostsWithQuery,
+    getNewest5Posts: getNewest5Posts
 };
 
 function getPostById(id, callback) {
@@ -35,5 +36,13 @@ function getPostsWithQuery(conditions, sort, relation, callback) {
     Post.find(conditions)
         .sort(sort)
         .populate(relation)
+        .exec(callback);
+}
+
+function getNewest5Posts(callback) {
+    Post.find({published: true})
+        .sort('-created')
+        .populate(['author', 'category'])
+        .limit(5)
         .exec(callback);
 }
