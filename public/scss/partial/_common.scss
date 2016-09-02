@@ -15,6 +15,7 @@ body {
 .v1-cube{
     border-radius: 5px;
     background-color: $clr-bg-article;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 .v1-nav-link{
@@ -52,4 +53,8 @@ body {
 .v1-nav-logo{
     width: 188px;
     background: url('../../img/nav-logo-wh.png') no-repeat center center;
+}
+
+.clr-base-br{
+    color: $clr-base-brown;
 }
