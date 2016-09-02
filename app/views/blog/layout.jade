@@ -14,19 +14,7 @@ block main
                     a.v1-nav-link.mr30(href="/") 首页
                     a.v1-nav-link.mr30.pl20(href="/posts") 文章
                     a.v1-nav-link.pl20(href="/about") 关于
-    .container.mt20
-        .row
-            .col-sm-8.mt10.pb30
-                != messages()
-                block content
-            .col-sm-3.mt10
-                .v1-cube.p10
-                    h4 分类列表
-                    ol.list-unstyled.pl20.pr20
-                        each category in categories
-                            li.lh24
-                                a(href="/posts/category/" + category.name, title="文章分类："+category.name)
-                                    = category.name
+    block content
 
 block scripts
     script(src="/js/highlight/highlight.pack.js")

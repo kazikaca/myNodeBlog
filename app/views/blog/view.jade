@@ -1,51 +1,58 @@
 extends layout
 
 block content
-    .v1-cube.pt10.pb30.pl20.pr20.mb20
-        h2= post.title
-        .g9.mb30
-            span.mr5
-                =post.author.name
-            span.mr5 写于
-            span.mr30
-                =moment(post.created).format('YYYY/MM/DD')
-            span.mr15
-                i.fa.fa-heart.mr5(aria-hidden=true)
-                =post.meta.favorite || 0
-            span.mr15
-                i.fa.fa-commenting.mr5(aria-hidden=true)
-                =post.comments.length || 0
-            span
-                i.fa.fa-tag.mr5(aria-hidden=true)
-                =post.category.name
+    .container.mt20
+        .row
+            .col-sm-8.mt10.pb30
+                != messages()
+                .v1-cube.pt10.pb30.pl20.pr20.mb20
+                    h2= post.title
+                    .g9.mb30
+                        span.mr5
+                            =post.author.name
+                        span.mr5 写于
+                        span.mr30
+                            =moment(post.created).format('YYYY/MM/DD')
+                        span.mr15
+                            i.fa.fa-heart.mr5(aria-hidden=true)
+                            =post.meta.favorite || 0
+                        span.mr15
+                            i.fa.fa-commenting.mr5(aria-hidden=true)
+                            =post.comments.length || 0
+                        span
+                            i.fa.fa-tag.mr5(aria-hidden=true)
+                            =post.category.name
 
-        div.ti2em
-            != post.content
+                    div.ti2em
+                        != post.content
 
-    .v1-cube.pt10.pb30.pl20.pr20.mb20
-        .f18.g6.mt10.mb20 用户评论
+                .v1-cube.pt10.pb30.pl20.pr20.mb20
+                    .f18.g6.mt10.mb20 用户评论
 
-        div.post-comment-list
-            if post.comments.length
-                each comment in post.comments
-                    .comment-item.p10.mb10.clearfix
-                        .f14.g6= comment.email
-                            span.g9.ml5 说
-                        .f12.g9.mt2= moment(comment.created).format('YYYY-MM-DD HH:mm:ss')
-                        p.mt10= comment.content
-            else
-                .comment-item.p10.mb10.tc.g9 还没有评论
+                    div.post-comment-list
+                        if post.comments.length
+                            each comment in post.comments
+                                .comment-item.p10.mb10.clearfix
+                                    .f14.g6= comment.email
+                                        span.g9.ml5 说
+                                    .f12.g9.mt2= moment(comment.created).format('YYYY-MM-DD HH:mm:ss')
+                                    p.mt10= comment.content
+                        else
+                            .comment-item.p10.mb10.tc.g9 还没有评论
 
-    .v1-cube.pt10.pb30.pl20.pr20
-        form.post-comment-form(action="/posts/comment/" + post._id, method="post", enctype="application/x-www-form-urlencoded")
-            .f18.g6.mt30.mb20 有话要说...
-            div.form-group
-                label(for="email") 邮箱
-                input.form-control#email(type="text", name="email", placeholder="请输入邮箱...", required)
-            div.form-group
-                label(for="content") 内容
-                textarea.form-control#content(name="content", placeholder="请输入内容...", required)
-            button.mt10.btn.btn-primary(type="submit") 提交
+                .v1-cube.pt10.pb30.pl20.pr20
+                    form.post-comment-form(action="/posts/comment/" + post._id, method="post", enctype="application/x-www-form-urlencoded")
+                        .f18.g6.mt30.mb20 有话要说...
+                        div.form-group
+                            label(for="email") 邮箱
+                            input.form-control#email(type="text", name="email", placeholder="请输入邮箱...", required)
+                        div.form-group
+                            label(for="content") 内容
+                            textarea.form-control#content(name="content", placeholder="请输入内容...", required)
+                        button.mt10.btn.btn-primary(type="submit") 提交
+
+            .col-sm-3.mt10
+                include right
 
 block scripts
     script(src="/js/highlight/highlight.pack.js")

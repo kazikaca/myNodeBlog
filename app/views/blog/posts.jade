@@ -1,39 +1,45 @@
 extends layout
 
 block content
-    .v1-cube.mb10.pt10.pb10.pl30.pr30.f16.g9 所有文章
-    each post in posts
-        article.v1-cube.mb10.pt10.pb10.pl30.pr30
-            h3.g6
-                = post.title
-            .g9
-                span.mr5
-                    =post.author.name
-                span.mr5 写于
-                span.mr30
-                    =moment(post.created).format('YYYY/MM/DD')
-                span.mr15
-                    i.fa.fa-heart.mr5(aria-hidden=true)
-                    =post.meta.favorite || 0
-                span.mr15
-                    i.fa.fa-commenting.mr5(aria-hidden=true)
-                    =post.comments.length || 0
-                span
-                    i.fa.fa-tag.mr5(aria-hidden=true)
-                    =post.category.name
-            p.mt20
-                != truncate(post.content, 160)
-            a.dib(href="/posts/view/" + post.slug, target="_blank", title="查看全文") 查看全文
-            .break
+    .container.mt20
+        .row
+            .col-sm-8.mt10.pb30
+                != messages()
+                .v1-cube.mb10.pt10.pb10.pl30.pr30.f16.g9 所有文章
+                each post in posts
+                    article.v1-cube.mb10.pt10.pb10.pl30.pr30
+                        h3.g6
+                            = post.title
+                        .g9
+                            span.mr5
+                                =post.author.name
+                            span.mr5 写于
+                            span.mr30
+                                =moment(post.created).format('YYYY/MM/DD')
+                            span.mr15
+                                i.fa.fa-heart.mr5(aria-hidden=true)
+                                =post.meta.favorite || 0
+                            span.mr15
+                                i.fa.fa-commenting.mr5(aria-hidden=true)
+                                =post.comments.length || 0
+                            span
+                                i.fa.fa-tag.mr5(aria-hidden=true)
+                                =post.category.name
+                        p.mt20
+                            != truncate(post.content, 160)
+                        a.dib(href="/posts/view/" + post.slug, target="_blank", title="查看全文") 查看全文
+                        .break
 
-    if pageCount > 1
-        nav
-            ul.pagination
-                - var currentPage = 1
-                while currentPage < pageCount
-                    if (currentPage === pageNum)
-                        li.active
-                            a(href="/posts?page=" + currentPage)= currentPage++
-                    else
-                        li
-                            a(href="/posts?page=" + currentPage)= currentPage++
+                if pageCount > 1
+                    nav
+                        ul.pagination
+                            - var currentPage = 1
+                            while currentPage < pageCount
+                                if (currentPage === pageNum)
+                                    li.active
+                                        a(href="/posts?page=" + currentPage)= currentPage++
+                                else
+                                    li
+                                        a(href="/posts?page=" + currentPage)= currentPage++
+            .col-sm-3.mt10
+                include right

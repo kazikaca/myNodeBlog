@@ -1,0 +1,7 @@
+.v1-cube.p10
+    h4 分类列表
+    ol.list-unstyled.pl20.pr20
+        each category in categories
+            li.lh24
+                a(href="/posts/category/" + category.name, title="文章分类：" + category.name)
+                    = category.name
