@@ -4,7 +4,6 @@ var glob = require('glob');
 var favicon = require('serve-favicon');
 var logger = require('morgan');//控制台输出请求日志
 var moment = require('moment');
-var truncate = require('truncate');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');

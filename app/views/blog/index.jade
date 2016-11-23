@@ -2,6 +2,7 @@ extends ../layout
 
 append css
     link(rel='stylesheet', href='/components/font-awesome/css/font-awesome.css')
+    link(rel='stylesheet', href='/js/highlight/styles/default.css')
     link(rel='stylesheet', href='/css/index.css')
 
 block main
@@ -37,7 +38,7 @@ block main
                                 i.fa.fa-tag.mr5(aria-hidden=true)
                                 =post.category.name
                         p.mt20
-                            != truncate(post.content, index==0?700:160)
+                            != post.content
                         a.dib(href="/posts/view/" + post.slug, target="_blank", title="查看全文") 查看全文
                         .break
                 .v1-cube.p10.tc
@@ -52,3 +53,5 @@ block main
                                     = category.name
 block scripts
     script(src='/js/blog/index.js')
+    script(src="/js/highlight/highlight.pack.js")
+    script $(document).ready(function () {hljs.initHighlightingOnLoad();});
