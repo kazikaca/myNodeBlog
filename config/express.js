@@ -4,6 +4,7 @@ var glob = require('glob');
 var favicon = require('serve-favicon');
 var logger = require('morgan');//控制台输出请求日志
 var moment = require('moment');
+var trimHtml = require('trim-html');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
@@ -32,7 +33,7 @@ module.exports = function(app, config, connection) {
     app.use(function (req, res, next) {
         app.locals.pageName = req.path;
         app.locals.moment = moment;
-        app.locals.truncate = truncate;
+        app.locals.trimHtml = trimHtml;
         CategoryServ.getAllCategories(function (err, categories) {
             if (err) {
                 return next(err);

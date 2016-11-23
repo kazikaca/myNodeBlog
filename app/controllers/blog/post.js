@@ -1,7 +1,6 @@
 var express = require('express'),
     router = express.Router(),
     mongoose = require('mongoose'),
-    trimHtml = require('trim-html'),
     Post = mongoose.model('Post'),
     Category = mongoose.model('Category');
 
@@ -27,15 +26,9 @@ router.get('/', function (req, res, next) {
           pageNum = pageCount;
         }
 
-        var sendPost = posts.slice((pageNum - 1) * pageSize, pageNum * pageSize);
-        sendPost.forEach(function (post) {
-          var content = trimHtml(post.content, {limit: 160});
-          post.content = content.html;
-        });
-
         res.render('blog/posts', {
           title: '所有文章',
-          posts: sendPost,
+          posts: posts,
           pageNum: pageNum,
           pageCount: pageCount,
           pretty: true

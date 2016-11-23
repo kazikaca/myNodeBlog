@@ -30,7 +30,7 @@ block content
                                 i.fa.fa-tag.mr5(aria-hidden=true)
                                 =post.category.name
                         p.mt20
-                            != truncate(post.content, 160)
+                            != trimHtml(post.content,{limit: 160}).html
                         a.dib(href="/posts/view/" + post.slug, target="_blank", title="查看全文") 查看全文
                         .break
             .col-sm-3.mt10

@@ -38,7 +38,7 @@ block main
                                 i.fa.fa-tag.mr5(aria-hidden=true)
                                 =post.category.name
                         p.mt20
-                            != post.content
+                            != trimHtml(post.content,{limit: index === 0 ? 700 :160 }).html
                         a.dib(href="/posts/view/" + post.slug, target="_blank", title="查看全文") 查看全文
                         .break
                 .v1-cube.p10.tc
