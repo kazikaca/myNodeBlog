@@ -2,38 +2,48 @@ var express = require('express'),
     router = express.Router(),
     mongoose = require('mongoose'),
     Post = mongoose.model('Post'),
-    Category = mongoose.model('Category');
+    Category = mongoose.model('Category'),
+    PostServ = require('../../service/postService');
 
 module.exports = function (app) {
   app.use('/posts', router);
 };
 
 router.get('/', function (req, res, next) {
-  Post.find({published: true})
-      .sort('-created')
-      .populate('author')
-      .populate('category')
-      .exec(function (err, posts) {
-        if (err) return next(err);
 
-        var pageNum = Math.abs(parseInt(req.query.page || 1, 10));
-        var pageSize = 10;
+  PostServ.countPosts(function (err, count) {
+    if (err) return next(err);
 
-        var totalCount = posts.length;
-        var pageCount = Math.ceil(totalCount / pageSize);
+    var total = count;
+    var page = Math.abs(parseInt(req.query.page || 1, 10));
+    var size = 10;
 
-        if (pageNum > pageCount) {
-          pageNum = pageCount;
-        }
+    if(page * size > total){
+      res.redirect('/posts?page=1');
+      return;
+    }
 
-        res.render('blog/posts', {
-          title: '所有文章',
-          posts: posts,
-          pageNum: pageNum,
-          pageCount: pageCount,
-          pretty: true
+    var totalpages = Math.ceil(total / size);
+    var step2skip = (page - 1) * size;
+
+    PostServ.getPostsWithQuery(
+        {published: true},
+        {'created':'desc'},
+        ['author', 'category'],
+        step2skip,
+        size,
+        function (err, posts) {
+          if (err) return next(err);
+
+          res.render('blog/posts', {
+            title: '所有文章',
+            posts: posts,
+            pageNum: page,
+            pageCount: totalpages,
+            pretty: true
+          });
         });
-      });
+  });
 });
 
 router.get('/category/:name', function (req, res, next) {
