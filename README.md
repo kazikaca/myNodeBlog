@@ -12,7 +12,7 @@
   - [ ] 使用vue2.0重写管理后台
   - [X] 重写分页
   - [ ] 前台模板语言更换为ejs
-  - [ ] 根据[nodeclub](https://github.com/cnodejs/nodeclub调整代码)
+  - [ ] 根据[nodeclub](https://github.com/cnodejs/nodeclub)调整代码
 - [ ] 构建工具
   - [ ] 加入webpack
   - [ ] 使用ES6和babel
