@@ -25,3 +25,10 @@ router.get('/about', function (req, res, next) {
     pretty: true
   });
 });
+
+router.get('/v1-login', function (req, res, next) {
+  res.render('login', {
+    pretty: true,
+    title: '登录'
+  });
+});
