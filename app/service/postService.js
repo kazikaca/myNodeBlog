@@ -39,7 +39,7 @@ function countPosts(callback) {
  *  -err
  *  -posts
  */
-function getPostsWithQuery(conditions, sort, relation,steps, size, callback) {
+function getPostsWithQuery(conditions, sort, relation, steps, size, callback) {
   return Post.find(conditions)
       .sort(sort)
       .skip(steps)

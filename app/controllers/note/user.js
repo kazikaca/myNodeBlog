@@ -1,16 +1,14 @@
 var express = require('express'),
     router = express.Router(),
-    mongoose = require('mongoose'),
     md5 = require('md5'),
-    passport = require('passport'),
     tool = require('../../common/tool'),
-    NoteUserService = require('../../service/noteUserService.js');
+    NoteUserService = require('../../service/noteUserService');
 
 module.exports = function (app) {
     app.use('/noteApi/users', router);
 };
 
-router.post('/add', function (req, res, next) {
+router.post('/add', tool.requireUserId, function (req, res, next) {
     var ak = req.body.ak,
         confirmAk = req.body.confirmAk,
         type = req.body.type;
@@ -32,6 +30,7 @@ router.post('/add', function (req, res, next) {
 
     var md5AK = md5(ak);
 
+    // 检查AK是否已经被占用
     NoteUserService.findOneUser({ak: md5AK}, function(err, user){
         if(err){
             console.log('/noteApi/users/add error:', err);
@@ -49,7 +48,7 @@ router.post('/add', function (req, res, next) {
 
             var newUser = {
                 ak: md5AK,
-                type: type,
+                type: type && type.toLowerCase(),
                 created: new Date()
             };
 
@@ -95,6 +94,11 @@ router.post('/login', tool.requireUserId, function (req, res, next) {
                 code: 500,
                 message: '系统内部错误'
             });
+        } else if (!user) {
+            res.json({
+                code: 401,
+                message: '未授权'
+            });
         } else {
             user.ak = null;
             res.json({
@@ -106,21 +110,3 @@ router.post('/login', tool.requireUserId, function (req, res, next) {
     });
 
 });
-
-
-function getById(req, res, next) {
-    //user id 从params传进或者从session中获取
-    var _userId = req.params.id || req.body.id;
-
-    if (!_userId) {
-        return next(new Error('no user id provided'));
-    }
-
-    UserServ.getUserById(_userId, function (err, user) {
-        if (err)return next(err);
-        if (!user)return next(new Error('user not found'));
-
-        req.user = user;
-        next();
-    });
-}

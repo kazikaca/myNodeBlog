@@ -63,6 +63,11 @@ module.exports = function(app, config, connection) {
                 msg   : msg,
                 value : value
             };
+        },
+        customValidators: {
+            gte: function(param, num) {
+                return param >= num;
+            }
         }
     }));
 

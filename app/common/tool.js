@@ -26,7 +26,9 @@ function requireLogin(req, res, next) {
 exports.requireLogin = requireLogin;
 
 function requireUserId(req, res, next) {
-    if (req.get('_id')) {
+    var _userId = req.get('_userId');
+    if (_userId) {
+        req.noteUserId = _userId;
         next();
     } else {
         return res.json({
