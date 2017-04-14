@@ -70,7 +70,7 @@ router.post('/add', tool.requireUserId, function (req, res, next) {
     });
 });
 
-router.post('/login', tool.requireUserId, function (req, res, next) {
+router.post('/login', function (req, res, next) {
     var ak = req.body.ak;
 
     //表单验证
